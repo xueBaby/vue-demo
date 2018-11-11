@@ -3,7 +3,9 @@
     <div class="todo-wrap">
       <TodoHeader :addTodo="addTodo"/>
       <TodoMain :todos="todos" :deleteTodo="deleteTodo" />
-      <TodoFooter/>
+      <TodoFooter :todos="todos"
+                  :deleteCompleteTodos="deleteCompleteTodos"
+                  :selectAllTodos="selectAllTodos"/>
     </div>
   </div>
 </template>
@@ -23,13 +25,22 @@
       }
     },
     methods: {
-      //添加title
+      //添加todo
       addTodo (todo) {
         this.todos.unshift(todo)
       },
-      //删除title
+      //删除指定下标的todo
       deleteTodo (index) {
         this.todos.splice(index, 1)
+      },
+      //删除已完成的todo
+      deleteCompleteTodos(){ //是否传参看是否有不确定因素
+        //filter不会改变原来的数据需要把todos重新幅值
+        this.todos = this.todos.filter(todo => !todo.complete)
+      },
+      //选择所有todo或全不选
+      selectAllTodos(isCheck){ //有不确定因素
+        this.todos.forEach(todo => todo.complete = isCheck )
       }
     },
     components: {
