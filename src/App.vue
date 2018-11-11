@@ -1,8 +1,8 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <TodoHeader/>
-      <TodoMain :todos="todos" />
+      <TodoHeader :addTodo="addTodo"/>
+      <TodoMain :todos="todos" :deleteTodo="deleteTodo" />
       <TodoFooter/>
     </div>
   </div>
@@ -20,6 +20,16 @@
           {title: '睡觉', complete: false},
           {title: '打豆豆', complete: false}
         ]
+      }
+    },
+    methods: {
+      //添加title
+      addTodo (todo) {
+        this.todos.unshift(todo)
+      },
+      //删除title
+      deleteTodo (index) {
+        this.todos.splice(index, 1)
       }
     },
     components: {

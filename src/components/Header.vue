@@ -1,11 +1,38 @@
 <template>
   <div class="todo-header">
-    <input type="text" placeholder="请输入你的任务名称，按回车键确认"/>
+    <input type="text" placeholder="请输入你的任务名称，按回车键确认" @keyup.enter="addTitle" v-model="title"/>
   </div>
 </template>
 <script>
   export default {
-
+    props: {
+      addTodo:{
+        type: Function,
+        required: true
+      }
+    },
+    data () {//初始化状态
+      return {
+        title: ''
+      }
+    },
+    methods: {
+      addTitle () {
+        //根据输入的数据，封装一个todo对象
+        const title = this.title.trim();
+        if(!title){
+          return console.log('必须输入');//此时return就是为了结束
+        }
+        const todo = {
+          title,
+          complete: false
+        }
+        //调用addTodo添加todo
+        this.addTodo(todo);
+//        清除输入
+        this.title= '';//双向数据绑定，通过data来显示页面
+      }
+    }
   }
 </script>
 <style scoped>
